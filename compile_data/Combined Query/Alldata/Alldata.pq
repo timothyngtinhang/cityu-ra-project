@@ -8,6 +8,7 @@ let
     LT1_Original = Excel.CurrentWorkbook(){[Name="LT1Alldata"]}[Content],
     ParentNameMatch_Original = Excel.CurrentWorkbook(){[Name="ParentNameMatch"]}[Content],
     AnnualIDMatch = Excel.CurrentWorkbook(){[Name="AnnualIDMatch"]}[Content],
+    Online3Us = Excel.CurrentWorkbook(){[Name="Online3Us"]}[Content],
     // AdditionalStatus = Excel.CurrentWorkbook(){[Name="AdditionalStatus"]}[Content],
 
 
@@ -106,9 +107,19 @@ let
     // // Rename the custom XT1_Note to the original column name if needed
     // RenamedXT1_Note = Table.RenameColumns(RemovedOriginalXT1_Note, {{"XT1_Note.1", "XT1_Note"}}),
 
+    // Adding District and Group
+    OriginalColumnNames = Table.ColumnNames(CombinedData),
+
+    JoinWith3Us = Table.NestedJoin(CombinedData, {"XT1_SID"}, Online3Us, {"School ID"}, "Online3Us", JoinKind.LeftOuter),
+    ExpandedColumns = Table.ExpandTableColumn(JoinWith3Us, "Online3Us", {"District", "Group"}),
+    RemovedOldColumns = Table.RemoveColumns(ExpandedColumns, {"XT1_Dummy1", "XT1_Group"}),
+    RenamedColumns = Table.RenameColumns(RemovedOldColumns, {{"District", "XT1_Dummy1"}, {"Group", "XT1_Group"}}),
+
+    ReorderedColumns = Table.ReorderColumns(RenamedColumns, OriginalColumnNames),
+
     // Replace blank or null cells with "#blank"
     ReplaceBlanks = Table.TransformColumns(
-        CombinedData,
+        ReorderedColumns,
         List.Transform(Table.ColumnNames(CombinedData), (columnName) =>
             {columnName, each if _ is null or _ = "" then "#blank" else _})
     ),
