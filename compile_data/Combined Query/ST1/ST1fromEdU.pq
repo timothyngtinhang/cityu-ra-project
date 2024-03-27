@@ -1,5 +1,12 @@
 let
-    Source = FolderPath,
+    // Reference the FolderPathsQuery
+    FolderPathsQuery = #"FolderPathsQuery",
+    // Retrieve the folder path from the table
+    // Make sure to use the correct row index (0 for the first row)
+    FolderPath = FolderPathsQuery{0}[FolderPath],
+    // Get the files from the specified folder
+    Source = Folder.Files(FolderPath),
+    
     #"Filtered Rows" = Table.SelectRows(Source, each Text.Contains([Name], "ST1-EdUHK")),
     #"Added Custom" = Table.AddColumn(#"Filtered Rows", "Custom", each let
         // Access the content of the file
