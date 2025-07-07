@@ -5,7 +5,7 @@ let
     // Get the files from the specified folder
     Source = Folder.Files(FolderPath),
     // Filter the rows to only include files that contain "CheckCurrent" in their name
-    FilteredRows = Table.SelectRows(Source, each Text.Contains([Name], "CheckCurrent")),
+    FilteredRows = Table.SelectRows(Source, each Text.Contains([Name], "Check")), // Changed to a more generic filter
 
     // Define a function to process individual files
     ProcessFile = (File) => 
@@ -13,7 +13,7 @@ let
         // Access the content of the file
         ExcelContent = Excel.Workbook(File[Content]),
         // Select the specific sheet by name
-        SpecificSheet = Table.SelectRows(ExcelContent, each [Name] = "SPSS Data Entry Template" and [Kind] = "Sheet"),
+        SpecificSheet = Table.SelectRows(ExcelContent, each [Kind] = "Sheet"), // Removed specific sheet name
         FirstSheetData = SpecificSheet{0}[Data],
         // Promote the first row to headers
         PromotedHeaders = Table.PromoteHeaders(FirstSheetData, [PromoteAllScalars=true]),

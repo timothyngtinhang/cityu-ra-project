@@ -1,5 +1,5 @@
 let
-    Source = Excel.Workbook(Web.Contents("https://beaverton-my.sharepoint.com/personal/keystepsatjc_um_cityu_edu_hk/Documents/KeySteps@JC 2.0/Research/Annual Questionnaire - Collection/Questionnaire Collection Status_for 3Us.xlsx"), null, true),
+    Source = Excel.Workbook(Web.Contents("https://example.com/your_master_data.xlsx"), null, true),
     #"Master (123)_Sheet" = Source{[Item="Master (123)",Kind="Sheet"]}[Data],
     #"Promoted Headers" = Table.PromoteHeaders(#"Master (123)_Sheet", [PromoteAllScalars=true]),
     #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"School ID", type text}, {"Group", type any}, {"District (Eng)", type text}, {"District", type text}, {"School Name (Chi)", type text}, {"Address (Chi)", type text}, 

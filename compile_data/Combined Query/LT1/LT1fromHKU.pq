@@ -7,7 +7,7 @@ let
     // Get the files from the specified folder
     Source = Folder.Files(FolderPath),
     
-    #"Filtered Rows" = Table.SelectRows(Source, each Text.Contains([Name], "Annual Qx 202324")),
+    #"Filtered Rows" = Table.SelectRows(Source, each Text.Contains([Name], "Annual Qx")), // Changed to a more generic filter
     #"Added Custom" = Table.AddColumn(#"Filtered Rows", "Custom", each let
         // Access the content of the file
         ExcelContent = Excel.Workbook([Content]),

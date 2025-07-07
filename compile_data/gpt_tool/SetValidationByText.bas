@@ -7,10 +7,10 @@ Sub SetValidationByText()
     Application.ScreenUpdating = False
     
     ' Define the range where you want to apply the data validation
-    Set dataRange = ThisWorkbook.Sheets("Validation VBA").Range("C2:C1000")
+    Set dataRange = ThisWorkbook.Sheets("Validation VBA").Range("C2:C" & Rows.Count).End(xlUp)) ' Changed to dynamic range
     
     ' Define the range that contains the validation criteria for each cell
-    Set validationRange = ThisWorkbook.Sheets("Validation VBA").Range("B2:B1000")
+    Set validationRange = ThisWorkbook.Sheets("Validation VBA").Range("B2:B" & Rows.Count).End(xlUp)) ' Changed to dynamic range
     
     ' Clear all data validation from the target range before applying new validation
     dataRange.Validation.Delete

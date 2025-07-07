@@ -12,7 +12,7 @@ Sub ReplaceIndirectWithDirect()
     
     ' Define the range to search for INDIRECT formulas
     Dim targetRange As Range
-    Set targetRange = ActiveSheet.Range("B30:B542") ' Adjust the range to your needs
+    Set targetRange = ActiveSheet.UsedRange ' Changed to UsedRange
 
     ' Loop through each cell in the defined range
     For Each cell In targetRange

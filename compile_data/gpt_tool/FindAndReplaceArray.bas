@@ -26,7 +26,7 @@ Sub FindAndReplaceArray()
     Next keyCell
     
     ' Set the target range on the active sheet (change the range as necessary)
-    Set targetRange = ActiveSheet.Range("A2:Z2")
+    Set targetRange = ActiveSheet.UsedRange ' Changed to UsedRange
     
     ' Read the target range into an array for fast processing
     If Not targetRange Is Nothing Then

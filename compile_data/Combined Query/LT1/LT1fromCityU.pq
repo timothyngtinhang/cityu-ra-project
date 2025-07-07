@@ -7,13 +7,13 @@ let
     // Get the files from the specified folder
     Source = Folder.Files(FolderPath),
 
-    #"Filtered Rows" = Table.SelectRows(Source, each Text.Contains([Name], "CheckCurrent")),
+    #"Filtered Rows" = Table.SelectRows(Source, each Text.Contains([Name], "Check")), // Changed to a more generic filter
     #"Added Custom" = Table.AddColumn(#"Filtered Rows", "Custom", each let
         // Access the content of the file
         ExcelContent = Excel.Workbook([Content]),
 
         // Select the specific sheet by name
-        SpecificSheet = Table.SelectRows(ExcelContent, each [Name] = "SPSS Data Entry Template" and [Kind] = "Sheet"),
+        SpecificSheet = Table.SelectRows(ExcelContent, each [Kind] = "Sheet"), // Removed specific sheet name
         FirstSheetData = SpecificSheet{0}[Data],
         
         // Skip the first row

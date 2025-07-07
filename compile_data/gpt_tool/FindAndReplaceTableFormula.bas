@@ -26,7 +26,7 @@ Sub OptimizedFindAndReplaceTable()
     Next keyCell
     
     ' Set the target table on the active sheet (change the table name as necessary)
-    Set targetTable = ActiveSheet.ListObjects("AlldataFillL2") ' Change "YourTableName" to your table's name
+    Set targetTable = ActiveSheet.ListObjects(1) ' Changed to reference the first table
     
     ' Loop through each column in the table
     For Each tableColumn In targetTable.ListColumns

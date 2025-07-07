@@ -6,11 +6,11 @@ Sub ExtractAndDisplayValidation()
 
     ' Set reference to the appropriate worksheet
     ' Replace "Sheet1" with the name of your sheet
-    Set ws = ThisWorkbook.Sheets("Sheet1")
+    Set ws = ActiveSheet ' Changed to ActiveSheet
 
     ' Define the range you want to check for data validation in column B
     ' Adjust the row numbers as necessary
-    Set rng = ws.Range("B1:B1000" & ws.Cells(ws.Rows.Count, "B").End(xlUp).Row)
+    Set rng = ws.Range("B1:B" & ws.Cells(ws.Rows.Count, "B").End(xlUp).Row) ' Changed to dynamic range
 
     ' Loop through each cell in the range
     For Each cell In rng
